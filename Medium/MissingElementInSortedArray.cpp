@@ -55,5 +55,9 @@ int main(){
 	nums.clear();
 	nums = {1,2,4};
 	std::cout << missingElement(nums, 3) << std::endl;
+	
+	nums.clear();
+	nums = {2,3,4,6,7};
+	std::cout << missingElement(nums, 1) << std::endl;
 	return 0;
 }
