@@ -1,25 +1,27 @@
 #https://leetcode.com/problems/majority-element/
 
-class Solution(object):
-    def majorityElement(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
+class Solution:
+    # def majorityElement(self, nums: List[int]) -> int:
+        # map = Counter(nums)
+
+        # for key in map:
+        #     if map[key] >= len(nums)/2:
+        #         return key
+
+        # return -1
+
+    def majorityElement(self, nums: List[int]) -> int:
+        majority = 0
+        majorityCount = 0
         
-        # majority = nums[0]
-        # data={}
+        for i in range(0,len(nums)):
+            if majorityCount == 0:
+                majority = nums[i]
+            
+            if nums[i] == majority:
+                majorityCount += 1 
+            else:
+                majorityCount-=1
         
-        # for i in range(0, len(nums)):      
-        #     if nums[i] in data:
-        #         data[nums[i]] = data[nums[i]]+1
-        #     else:
-        #         data[nums[i]] = 1
+        return majority
 
-        #     if (data[majority] < data[nums[i]]):
-        #         majority = nums[i]
-
-        # return majority
-
-        nums.sort()
-        return nums[len(nums)//2]
