@@ -31,27 +31,49 @@
 
 
 
-
-
-#Simpler answer
+#Queue solution (EASIEST TO UNDERSTAND)
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
-        nums=list(range(n))
-        index=0
+        q = deque()
+        
+        for i in range(1, n+1):
+            q.append(i)
 
-        while len(nums)>1:
-            index = (index + k-1) % len(nums)
-            nums.pop(index)
+        while len(q)>1:
+            for i in range(0, k-1):
+                num = q.popleft()
+                q.append(num)
+            q.popleft()
 
-        return nums[0]+1
+        return q[0]    
 
 
 
-#Best approach... i dont understand it
+# like queue solution but with array
+# class Solution:
+#     def findTheWinner(self, n: int, k: int) -> int:
+#         nums=list(range(n))
+#         index=0
+
+#         while len(nums)>1:
+#             index = (index + k-1) % len(nums)
+#             nums.pop(index)
+
+#         return nums[0]+1
+
+
+
+
+
+
+#Better approach (recursion)... O(n) time and space complexity
 # class Solution:
 #     def findTheWinner(self, n: int, k: int) -> int:
 #         if n == 1:
 #             return 1
 #         else:
 #             return (self.findTheWinner(n-1, k)+k-1) % n + 1
+
+
+
 
