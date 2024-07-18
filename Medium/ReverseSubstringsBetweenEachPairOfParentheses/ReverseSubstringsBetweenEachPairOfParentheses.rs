@@ -15,7 +15,7 @@ impl Solution {
                 stack.push_back(curr_word);
                 curr_word = String::from("");
             } else if *ch == ')' {
-                let mut reversed = curr_word.chars().rev().collect();
+                let reversed = curr_word.chars().rev().collect();
                 match stack.pop_back() {
                     None => {
                         curr_word = reversed;
