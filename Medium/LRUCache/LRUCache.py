@@ -18,55 +18,67 @@
 #         if len(self.cache) > self.capacity:
 #             self.cache.pop(next(iter(self.cache)))
 
-class LRUCache:
-    class Node:
-        def __init__(self, key, val):
-            self.key = key
-            self.val = val
-            self.prev = None
-            self.next = None
 
+
+
+
+
+
+
+
+
+
+
+
+class Node:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+
+class LRUCache:
     def __init__(self, capacity: int):
         self.cap = capacity
-        self.head = self.Node(-1, -1)
-        self.tail = self.Node(-1, -1)
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        self.m = {}
+        self.cache = {}
+        #left = least recently used, right=most recently used
+        self.left = Node(0,0)
+        self.right = Node(0,0)
+        self.left.next = self.right
+        self.right.prev = self.left
 
-    def addNode(self, newnode):
-        temp = self.head.next
-        newnode.next = temp
-        newnode.prev = self.head
-        self.head.next = newnode
-        temp.prev = newnode
+    # insert node at right
+    def insert(self, node):
+        mostRecent = self.right.prev
+        mostRecent.next = node
+        node.prev = mostRecent
+        node.next = self.right
+        self.right.prev = node
 
-    def deleteNode(self, delnode):
-        prevv = delnode.prev
-        nextt = delnode.next
-        prevv.next = nextt
-        nextt.prev = prevv
+    # remove node from list
+    def remove(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
 
     def get(self, key: int) -> int:
-        if key in self.m:
-            resNode = self.m[key]
-            ans = resNode.val
-            del self.m[key]
-            self.deleteNode(resNode)
-            self.addNode(resNode)
-            self.m[key] = self.head.next
-            return ans
-        return -1
+        if key not in self.cache:
+            return -1
+        self.remove(self.cache[key])
+        self.insert(self.cache[key])
+        return self.cache[key].val
 
     def put(self, key: int, value: int) -> None:
-        if key in self.m:
-            curr = self.m[key]
-            del self.m[key]
-            self.deleteNode(curr)
+        if key in self.cache:
+            self.remove(self.cache[key])
+        self.cache[key] = Node(key,value)
+        self.insert(self.cache[key])
 
-        if len(self.m) == self.cap:
-            del self.m[self.tail.prev.key]
-            self.deleteNode(self.tail.prev)
+        if len(self.cache)>self.cap:
+            lruNode = self.left.next
+            self.remove(lruNode)
+            self.cache.pop(lruNode.key)
 
-        self.addNode(self.Node(key, value))
-        self.m[key] = self.head.next
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
