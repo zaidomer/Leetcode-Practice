@@ -2,6 +2,8 @@
 
 class Solution:
     def maximumDetonation(self, bombs: List[List[int]]) -> int:
+        #Time: O(n^2), Space: O(n^2) 
+        
         graph = defaultdict(list)
         for i in range(len(bombs)):
             for j in range(len(bombs)):
