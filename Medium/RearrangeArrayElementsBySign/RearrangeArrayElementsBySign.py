@@ -2,6 +2,7 @@
 
 class Solution:
     def rearrangeArray(self, nums: List[int]) -> List[int]:
+        # Time: O(n), Space: O(1)
         res = [0 for _ in range(len(nums))]
         posPtr = 0
         negPtr = 1
