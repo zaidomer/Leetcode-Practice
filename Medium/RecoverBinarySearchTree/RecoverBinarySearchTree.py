@@ -8,7 +8,7 @@
 #         self.right = right
 class Solution:
     def recoverTree(self, root: Optional[TreeNode]) -> None:
-        #Time: O(n), Space: O(n)
+        #Time: O(nlogn), Space: O(n)
         nodes = []
         i=0
         def dfs(node, setVal):
